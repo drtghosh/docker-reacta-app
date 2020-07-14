@@ -6,3 +6,15 @@ before_install:
     - docker build -t drtghosh/react-app -f Dockerfile.dev .
 script:
     - docker run -it -e CI=true drtghosh/react-app npm run test
+deploy:
+    provider: elasticbeanstalk
+    region: "ap-south-1"
+    env: "DockerReactApp-env"
+    app: "docker-react-app"
+    bucket_name: "elasticbeanstalk-ap-south-1-765905386018"
+    bucket_path: "docker-react-app"
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key:
+        secure: $AWS_SECRET_ACCESS_KEY
